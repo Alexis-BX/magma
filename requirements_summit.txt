@@ -14,3 +14,6 @@ git+https://github.com/openai/CLIP.git
 git+https://github.com/mlfoundations/open_clip
 deepspeed
 wandb
+webdataset
+pandas
+braceexpand

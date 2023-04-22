@@ -61,9 +61,9 @@ class MultimodalConfig:
     eval_dataset_dir: str = "/data/coco_data"
     eval_dataset_pct: float = 0.1
 
-    # train_data: str = "/gpfs/alpine/csc499/proj-shared/LAION-400m-webdataset/data/{00000..41455}.tar"
-    # val_data: str = "/gpfs/alpine/csc499/proj-shared/LAION-400m-webdataset/data/{00000..41455}.tar"
-    # train_num_samples: int = 407332084
+    train_data: str # = "/gpfs/alpine/csc499/proj-shared/LAION-400m-webdataset/data/{00000..41455}.tar"
+    val_data: str # = "/gpfs/alpine/csc499/proj-shared/LAION-400m-webdataset/data/{00000..41455}.tar"
+    train_num_samples: int # = 407332084
     dataset_resampled: bool = False
     seed: int = 0
     workers: int = 4 # number of worker for dataloader
