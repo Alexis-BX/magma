@@ -140,6 +140,9 @@ if __name__ == "__main__":
     train_loader, eval_loader = get_pretraining_dataloader(
        config, tokenizer, transforms
     )
+    train_loader = cycle(train_loader)
+    eval_loader = cycle(eval_loader)
+
 
     # initialize training
     global_step = 0
