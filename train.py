@@ -25,6 +25,7 @@ from magma.utils import (
     print_main,
     configure_param_groups,
 )
+from magma.webdataset import get_wds_dataset
 from magma.train_loop import (
     eval_step,
     inference_step,
@@ -34,40 +35,59 @@ from magma.train_loop import (
 import deepspeed.comm as dist
 from deepspeed.runtime.utils import see_memory_usage
 
-def _load_img_cpt_datasets(dataset_dir, tokenizer, transforms):
-    if isinstance(dataset_dir, (list, tuple)):
-        return ConcatDataset(
-            [_load_img_cpt_datasets(d, tokenizer, transforms) for d in dataset_dir]
-        )
-    elif isinstance(dataset_dir, str):
-        return ImgCptDataset(dataset_dir, tokenizer=tokenizer, transforms=transforms)
-    else:
-        raise TypeError("dataset dir wrong type")
+# def _load_img_cpt_datasets(dataset_dir, tokenizer, transforms):
+#     if isinstance(dataset_dir, (list, tuple)):
+#         return ConcatDataset(
+#             [_load_img_cpt_datasets(d, tokenizer, transforms) for d in dataset_dir]
+#         )
+#     elif isinstance(dataset_dir, str):
+#         return ImgCptDataset(dataset_dir, tokenizer=tokenizer, transforms=transforms)
+#     else:
+#         raise TypeError("dataset dir wrong type")
 
 
-def get_pretraining_datasets(config, tokenizer, transforms):
-    # if config.train_dataset_dir is a list, load all datasets + join together
-    train_dataset = _load_img_cpt_datasets(
-        config.train_dataset_dir, tokenizer, transforms
-    )
-    # if no dedicated eval sets are given, use a percentage of the train dataset
-    if config.eval_dataset_dir is None:
-        eval_len = int(len(train_dataset) * config.eval_dataset_pct)
-        train_len = len(train_dataset) - eval_len
-        print(
-            f"Randomly splitting train_dataset into two datasets of length {train_len} and {eval_len}"
-        )
-        train_dataset, eval_dataset = random_split(train_dataset, [train_len, eval_len])
-    else:
-        eval_dataset = _load_img_cpt_datasets(
-            config.eval_dataset_dir, tokenizer, transforms
-        )
+# def get_pretraining_datasets(config, tokenizer, transforms):
+#     # if config.train_dataset_dir is a list, load all datasets + join together
+#     train_dataset = _load_img_cpt_datasets(
+#         config.train_dataset_dir, tokenizer, transforms
+#     )
+#     # if no dedicated eval sets are given, use a percentage of the train dataset
+#     if config.eval_dataset_dir is None:
+#         eval_len = int(len(train_dataset) * config.eval_dataset_pct)
+#         train_len = len(train_dataset) - eval_len
+#         print(
+#             f"Randomly splitting train_dataset into two datasets of length {train_len} and {eval_len}"
+#         )
+#         train_dataset, eval_dataset = random_split(train_dataset, [train_len, eval_len])
+#     else:
+#         eval_dataset = _load_img_cpt_datasets(
+#             config.eval_dataset_dir, tokenizer, transforms
+#         )
 
-    print_main(f"Loaded train dataset with {len(train_dataset)} samples")
-    print_main(f"Loaded eval dataset with {len(eval_dataset)} samples")
+#     print_main(f"Loaded train dataset with {len(train_dataset)} samples")
+#     print_main(f"Loaded eval dataset with {len(eval_dataset)} samples")
 
-    return train_dataset, eval_dataset
+#     return train_dataset, eval_dataset
 
+def get_pretraining_dataloader(config, tokenizer, transforms):
+    
+    def preprocess_text(text):
+        return tokenizer.encode(
+                    text,
+                    return_tensors="pt",
+                    max_length=2048,
+                    padding="max_length",
+                    truncation=True,)
+    config.world_size=int(os.environ['WORLD_SIZE'])
+    data = get_wds_dataset(config, transforms, preprocess_text, is_train=True)
+    data.set_epoch(0) # [TODO]go change this when training more than 1 epoch
+    train_loader=data.dataloader
+    
+    data = get_wds_dataset(config, transforms, preprocess_text, is_train=False)
+    data.set_epoch(0)
+    val_loader = data.dataloader
+
+    return train_loader, val_loader
 
 # tell tokenizers not to do parallelism
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -85,18 +105,18 @@ if __name__ == "__main__":
         args.config,
         device=torch.device("cuda", args.local_rank)
     )  # for finetuning one might want to load the model via Magma.from_checkpoint(...) here
+    device=torch.device("cuda",args.local_rank)
     tokenizer, config, transforms = model.tokenizer, model.config, model.transforms
 
     # filter frozen from trainable parameters:
     trainable_parameters = configure_param_groups(model, config)
 
     # load data:
-    train_dataset, eval_dataset = get_pretraining_datasets(
-        config, tokenizer, transforms
-    )
-
-    print_main(f"Loaded train dataset with {len(train_dataset)} samples")
-    print_main(f"Loaded eval dataset with {len(eval_dataset)} samples")
+    # train_dataset, eval_dataset = get_pretraining_datasets(
+    #     config, tokenizer, transforms
+    # )
+    # print_main(f"Loaded train dataset with {len(train_dataset)} samples")
+    # print_main(f"Loaded eval dataset with {len(eval_dataset)} samples")
 
     opt = AdamW(
         trainable_parameters,
@@ -110,12 +130,16 @@ if __name__ == "__main__":
         model=model,
         optimizer=opt,
         model_parameters=trainable_parameters,
-        training_data=train_dataset,
+        # training_data=train_dataset,
         collate_fn=partial(collate_fn, seq_len=model.seq_len),
         config_params=config.deepspeed_config_params,
     )
-    eval_loader = cycle(model_engine.deepspeed_io(eval_dataset))
-    train_loader = cycle(train_loader)
+    # eval_loader = cycle(model_engine.deepspeed_io(eval_dataset))
+    # train_loader = cycle(train_loader)
+
+    train_loader, eval_loader = get_pretraining_dataloader(
+       config, tokenizer, transforms
+    )
 
     # initialize training
     global_step = 0

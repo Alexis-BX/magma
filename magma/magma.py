@@ -65,7 +65,7 @@ class Magma(nn.Module):
         self.image_prefix = ImagePrefix(
             config=config,
             out_dim=self.lm.config.hidden_size,
-        ).to(self.device)
+        )
 
         # might change based on the type of image encoder, so get from prefix instead of config
         self.image_prefix_seq_len = self.image_prefix.out_seq_len

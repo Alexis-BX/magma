@@ -24,7 +24,7 @@ class MultimodalConfig:
     # Training:
     # ------------------------------------------------------------
 
-    batch_size: int
+    micro_batch_size: int
     train_steps: int
     optimizer_name: str = "AdamW"
     lr: float = 8.0e-4
@@ -60,6 +60,13 @@ class MultimodalConfig:
     train_dataset_dir: str = "/data/coco_data"
     eval_dataset_dir: str = "/data/coco_data"
     eval_dataset_pct: float = 0.1
+
+    # train_data: str = "/gpfs/alpine/csc499/proj-shared/LAION-400m-webdataset/data/{00000..41455}.tar"
+    # val_data: str = "/gpfs/alpine/csc499/proj-shared/LAION-400m-webdataset/data/{00000..41455}.tar"
+    # train_num_samples: int = 407332084
+    dataset_resampled: bool = False
+    seed: int = 0
+    workers: int = 4 # number of worker for dataloader
 
     # Model architecture:
     # ------------------------------------------------------------
@@ -128,7 +135,7 @@ class MultimodalConfig:
             }
         self.deepspeed_config_params = {
             #"train_batch_size": self.batch_size,
-            "train_micro_batch_size_per_gpu": self.batch_size,
+            "train_micro_batch_size_per_gpu": self.micro_batch_size,
             "gradient_accumulation_steps": self.gradient_accumulation_steps,
             "gradient_clipping": self.gradient_clipping,
             "fp16": {

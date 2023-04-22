@@ -10,7 +10,7 @@
     # lm_path: "EleutherAI/gpt-neox-20b",
 
     # train settings
-    batch_size: 3,
+    micro_batch_size: 3,
     train_steps: 150000,
     lr: 8.0e-4,
     min_lr: 0.0,
@@ -26,10 +26,10 @@
 
     # dataset / save / load settings
     # dataset_type: 'new',
-    train_dataset_dir: [
-        #'/gpfs/alpine/csc499/proj-shared/magma/flickr8k_processed',
-        '/gpfs/alpine/csc499/proj-shared/magma/LAION-400m-webdataset/',
-        ],
+    train_data: "/gpfs/alpine/csc499/proj-shared/LAION-400m-webdataset/data/{00000..37309}.tar",
+    val_data: "/gpfs/alpine/csc499/proj-shared/LAION-400m-webdataset/data/{37309..41455}.tar",
+    train_num_samples: 366598870,
+    # train_num_samples: 407332084,
 
     eval_dataset_dir: null, # if this is none, train dataset will be split
     # vqa_dir: "/mnt/localdisk/vqa_val_converted",

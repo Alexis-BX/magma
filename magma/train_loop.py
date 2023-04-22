@@ -9,7 +9,8 @@ def train_step(config, train_loader, model_engine):
 
     for _ in range(config.gradient_accumulation_steps):
         images, captions = next(train_loader)
-        images, captions = images.half().cuda(), captions.cuda()
+        images, captions = images.half().squeeze(1).cuda(), captions.squeeze(1).cuda()
+        # images, captions = images.half().cuda(), captions.cuda()
         if config.run_blind:
             images = torch.zeros_like(images)
         outputs = model_engine(images, captions)
