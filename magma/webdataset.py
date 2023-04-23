@@ -97,8 +97,7 @@ class DataInfo:
             self.sampler.set_epoch(epoch)
 
 def get_dataset_size(shards):
-    shards_list = list(braceexpand.braceexpand(shards))
-    dir_path = os.path.dirname(shards)
+    dir_path = os.path.dirname(shards[0])
     sizes_filename = os.path.join(dir_path, 'sizes.json')
     len_filename = os.path.join(dir_path, '__len__')
     if os.path.exists(sizes_filename):
@@ -114,7 +113,7 @@ def get_dataset_size(shards):
         # CC12M: 10968539
         # LAION-400M: 407332084
         # LAION-2B (english): 2170337258
-    num_shards = len(shards_list)
+    num_shards = len(shards)
     return total_size, num_shards
 
 class ResampledShards2(IterableDataset):
@@ -134,6 +133,7 @@ class ResampledShards2(IterableDataset):
         """
         super().__init__()
         urls = wds.shardlists.expand_urls(urls)
+        urls=[url for url in urls if os.path.exists(url)]
         self.urls = urls
         assert isinstance(self.urls[0], str)
         self.nshards = nshards
@@ -202,6 +202,9 @@ class detshuffle2(wds.PipelineStage):
 def get_wds_dataset(args, preprocess_img, preprocess_text, is_train, epoch=0, floor=False):
     input_shards = args.train_data if is_train else args.val_data
     assert input_shards is not None
+    input_shards = wds.shardlists.expand_urls(input_shards)
+    ### clean unexist input_shards
+    input_shards=[url for url in input_shards if os.path.exists(url)]
     resampled = getattr(args, 'dataset_resampled', False) and is_train
 
     num_samples, num_shards = get_dataset_size(input_shards)
@@ -296,7 +299,8 @@ def get_wds_dataset(args, preprocess_img, preprocess_text, is_train, epoch=0, fl
     #     # last batches are partial, eval is done on single (master) node
     #     num_batches = math.ceil(num_samples / args.micro_batch_size)
 
-    # add meta-data to dataloader instance for convenience
+    # add meta-data to dataload
+    
     dataloader.num_batches = num_batches
     dataloader.num_samples = num_samples
 
