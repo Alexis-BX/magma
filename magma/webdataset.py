@@ -102,7 +102,7 @@ def get_dataset_size(shards):
     len_filename = os.path.join(dir_path, '__len__')
     if os.path.exists(sizes_filename):
         sizes = json.load(open(sizes_filename, 'r'))
-        total_size = sum([int(sizes[os.path.basename(shard)]) for shard in shards_list])
+        total_size = sum([int(sizes[os.path.basename(shard)]) for shard in shards])
     elif os.path.exists(len_filename):
         # FIXME this used to be eval(open(...)) but that seemed rather unsafe
         total_size = ast.literal_eval(open(len_filename, 'r').read())
@@ -247,9 +247,10 @@ def get_wds_dataset(args, preprocess_img, preprocess_text, is_train, epoch=0, fl
         ])
     else:
         pipeline.extend([
-            wds.split_by_worker,
+            tarfile_to_samples_nothrow,
+            #wds.split_by_worker,
             # at this point, we have an iterator over the shards assigned to each worker
-            wds.tarfile_to_samples(handler=log_and_continue),
+            #wds.tarfile_to_samples(handler=log_and_continue),
         ])
     pipeline.extend([
         wds.select(filter_no_caption_or_no_image),
