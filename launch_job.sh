@@ -10,6 +10,8 @@
 
 source /gpfs/alpine/csc499/proj-shared/env_setup/setup.sh
 
+source activate /ccs/home/$(whoami)/scratch/miniconda3/envs/magma
+
 export TORCH_EXTENSIONS_DIR=/gpfs/alpine/scratch/$(whoami)/csc499/cache/torch_extensions
 
 # Write the hostfile for this job
