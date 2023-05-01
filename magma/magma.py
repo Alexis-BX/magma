@@ -52,7 +52,7 @@ class Magma(nn.Module):
         if config.lm_name == "gptj":
             self.word_embedding = self.lm.transformer.wte
             self.transformer = self.lm.transformer.h
-        elif config.lm_name == "neox":
+        elif config.lm_name == "pythia":
             self.word_embedding = self.lm.gpt_neox.embed_in
             self.transformer = self.lm.gpt_neox.layers
         else:
@@ -131,7 +131,7 @@ class Magma(nn.Module):
             "mlp",
             "attention",
         ], "location must be one of 'mlp' or 'attention'"
-        if self.config.lm_name == "neox":
+        if self.config.lm_name == "pythia":
             ff_attr = "mlp"
             attn_attr = "attention"
 

@@ -5,11 +5,11 @@
     freeze_img_encoder: false,
 
     # language model settings
-    lm_name: "neox",
-    lm_path: "EleutherAI/gpt-neox-20b",
+    lm_name: "pythia",
+    lm_path: "EleutherAI/pythia-160m-deduped-v0",
 
     # train settings
-    batch_size: 3,
+    micro_batch_size: 2,
     train_steps: 150000,
     lr: 8.0e-4,
     min_lr: 0.0,
@@ -25,19 +25,20 @@
 
     # dataset / save / load settings
     # dataset_type: 'new',
-    train_dataset_dir: ['/gpfs/alpine/csc499/proj-shared/magma/flickr8k_processed'], #'/mnt/brick/wit_converted'
+    train_data: "/gpfs/alpine/csc499/proj-shared/LAION-400m-webdataset/data/{00000..37309}.tar",
+    val_data: "/gpfs/alpine/csc499/proj-shared/LAION-400m-webdataset/data/{37309..41455}.tar",
+    train_num_samples: 366598870,
+    # train_num_samples: 407332084,
 
     eval_dataset_dir: null, # if this is none, train dataset will be split
     # vqa_dir: "/mnt/localdisk/vqa_val_converted",
     # gqa_dir: "/mnt/localdisk/gqa_val_converted",
 
     save_every: 2500,
-    save: "/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_20B_clipH",
-    load: "/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_20B_clipH",
-    #save: "checkpoints/MAGMA_19M_clipH",
-    #load: "checkpoints/MAGMA_19M_clipH",
+    save: "/gpfs/alpine/scratch/{{USER}}/csc499/magma/checkpoints/MAGMA_160M_clipH_{{NODES}}",
+    load: "/gpfs/alpine/scratch/{{USER}}/csc499/magma/checkpoints/MAGMA_160M_clipH_{{NODES}}",
 
-    eval_every: 250,
-    wandb_project: "MAGMA_20B_clipH",
-    name: "MAGMA_20B_clipH"
+    eval_every: 2500,
+    wandb_project: "MAGMA_160M_clipH",
+    name: "MAGMA_160M_clipH"
 }

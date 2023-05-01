@@ -8,7 +8,7 @@ from typing import Optional
 
 LANGUAGE_MODELS = [
     "gptj",
-    "neox"
+    "pythia"
 ]
 
 
@@ -48,7 +48,7 @@ def get_gptj(
             model = GPTNeoForCausalLM(config=config)
     return model
 
-def neox_config(path: Optional[str] = None):
+def pythia_config(path: Optional[str] = None):
     config = AutoConfig.from_pretrained(path if path is not None else "EleutherAI/pythia-70m-deduped")
     config.rotary = True
     config.rotary_dim = 64
@@ -56,17 +56,17 @@ def neox_config(path: Optional[str] = None):
     config.gradient_checkpointing = True
     return config
 
-def get_neox(
+def get_pythia(
     path: str = None,
     gradient_checkpointing: bool = True,
     init_weights=True,
     # from_pretrained=True,  # TODO think about this
 ) -> torch.nn.Module:
     """
-    Loads NeoX language model from HF
+    Loads Pythia language model from HF
     """
-    print_main("Loading NeoX language model...")
-    config = neox_config(path)
+    print_main("Loading Pythia language model...")
+    config = pythia_config(path)
     config.gradient_checkpointing = gradient_checkpointing
     if gradient_checkpointing:
         config.use_cache = False

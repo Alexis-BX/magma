@@ -5,5 +5,8 @@ wandb/*
 aws*
 *.env*
 
-configs/summit_clipH_pythia70m_*
-!configs/summit_clipH_pythia70m_template.yml
+configs/summit_clipH_pythia*
+!configs/summit_clipH_pythia*_template.yml
+
+magma_pythia*_err.*
+magma_pythia*_out.*

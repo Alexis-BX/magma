@@ -5,13 +5,8 @@
     freeze_img_encoder: false,
 
     # language model settings
-    lm_name: "neox",
-    #lm_path: "EleutherAI/pythia-70m-deduped",
-    #lm_path: "EleutherAI/pythia-160m-deduped-v0",
-    lm_path: "EleutherAI/pythia-410m-deduped",
-    # lm_path: "EleutherAI/neox-ckpt-pythia-160m-deduped-v1",
-    # lm_path: "EleutherAI/neox-ckpt-pythia-410m-deduped-v1",
-    # lm_path: "EleutherAI/gpt-neox-20b",
+    lm_name: "pythia",
+    lm_path: "EleutherAI/pythia-70m-deduped",
 
     # train settings
     micro_batch_size: 3,
@@ -40,12 +35,10 @@
     # gqa_dir: "/mnt/localdisk/gqa_val_converted",
 
     save_every: 2500,
-    save: "/gpfs/alpine/scratch/{{USER}}/csc499/magma/checkpoints/MAGMA_19M_clipH_{{NODES}}",
-    load: "/gpfs/alpine/scratch/{{USER}}/csc499/magma/checkpoints/MAGMA_19M_clipH_{{NODES}}",
-    #save: "checkpoints/MAGMA_19M_clipH",
-    #load: "checkpoints/MAGMA_19M_clipH",
+    save: "/gpfs/alpine/scratch/{{USER}}/csc499/magma/checkpoints/MAGMA_70M_clipH_{{NODES}}",
+    load: "/gpfs/alpine/scratch/{{USER}}/csc499/magma/checkpoints/MAGMA_70M_clipH_{{NODES}}",
 
-    eval_every: 250,
-    wandb_project: "MAGMA_19M_clipH",
-    name: "MAGMA_19M_clipH"
+    eval_every: 2500,
+    wandb_project: "MAGMA_70M_clipH",
+    name: "MAGMA_70M_clipH"
 }
