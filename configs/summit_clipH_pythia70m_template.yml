@@ -7,7 +7,9 @@
     # language model settings
     lm_name: "neox",
     #lm_path: "EleutherAI/pythia-70m-deduped",
-    lm_path: "EleutherAI/neox-ckpt-pythia-160m-deduped-v1",
+    #lm_path: "EleutherAI/pythia-160m-deduped-v0",
+    lm_path: "EleutherAI/pythia-410m-deduped",
+    # lm_path: "EleutherAI/neox-ckpt-pythia-160m-deduped-v1",
     # lm_path: "EleutherAI/neox-ckpt-pythia-410m-deduped-v1",
     # lm_path: "EleutherAI/gpt-neox-20b",
 

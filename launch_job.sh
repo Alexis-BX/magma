@@ -2,16 +2,19 @@
 #BSUB -nnodes 9
 #BSUB -W 2:00
 #BSUB -q batch
-#BSUB -o magma_pythia70m_out.%J
-#BSUB -e magma_pythia70m_err.%J
+#BSUB -o /ccs/home/alexisroger/scratch/jobs/magma_pythia70m_out.%J
+#BSUB -e /ccs/home/alexisroger/scratch/jobs/magma_pythia70m_err.%J
 #BSUB -J magma_pythia70m
 #BSUB -alloc_flags gpudefault
 #BSUB -P CSC499
 
 source /gpfs/alpine/csc499/proj-shared/env_setup/setup.sh
 
-source activate /ccs/home/$(whoami)/scratch/miniconda3/envs/magma
+#source activate /ccs/home/$(whoami)/scratch/miniconda3/envs/magma
+#conda info
 
+#export HF_DATASETS_CACHE=/gpfs/alpine/scratch/$(whoami)/csc499/cache/hugginface
+#export TRANSFORMERS_CACHE=/gpfs/alpine/scratch/$(whoami)/csc499/cache/transformers
 export TORCH_EXTENSIONS_DIR=/gpfs/alpine/scratch/$(whoami)/csc499/cache/torch_extensions
 
 # Write the hostfile for this job
