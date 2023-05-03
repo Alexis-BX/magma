@@ -34,11 +34,11 @@
     # vqa_dir: "/mnt/localdisk/vqa_val_converted",
     # gqa_dir: "/mnt/localdisk/gqa_val_converted",
 
-    save_every: 2500,
+    save_every: 2000,
     save: "/gpfs/alpine/scratch/{{USER}}/csc499/magma/checkpoints/MAGMA_160M_clipH_{{NODES}}",
     load: "/gpfs/alpine/scratch/{{USER}}/csc499/magma/checkpoints/MAGMA_160M_clipH_{{NODES}}",
 
-    eval_every: 2500,
+    eval_every: 2000,
     wandb_project: "MAGMA_160M_clipH",
     name: "MAGMA_160M_clipH"
 }

@@ -6,10 +6,10 @@
 
     # language model settings
     lm_name: "pythia",
-    lm_path: "EleutherAI/pythia-410m-deduped",
+    lm_path: "EleutherAI/pythia-70m-deduped",
 
     # train settings
-    micro_batch_size: 1,
+    micro_batch_size: 3,
     train_steps: 150000,
     lr: 8.0e-4,
     min_lr: 0.0,
@@ -25,9 +25,9 @@
 
     # dataset / save / load settings
     # dataset_type: 'new',
-    train_data: "/gpfs/alpine/csc499/proj-shared/LAION-400m-webdataset/data/{00000..37309}.tar",
+    train_data: "/gpfs/alpine/csc499/proj-shared/LAION-400m-webdataset/data/{00000..00003}.tar",
     val_data: "/gpfs/alpine/csc499/proj-shared/LAION-400m-webdataset/data/{37309..41455}.tar",
-    train_num_samples: 366598870,
+    train_num_samples: 39304,
     # train_num_samples: 407332084,
 
     eval_dataset_dir: null, # if this is none, train dataset will be split
@@ -35,10 +35,11 @@
     # gqa_dir: "/mnt/localdisk/gqa_val_converted",
 
     save_every: 2500,
-    save: "/gpfs/alpine/scratch/{{USER}}/csc499/magma/checkpoints/MAGMA_410M_clipH_{{NODES}}",
-    load: "/gpfs/alpine/scratch/{{USER}}/csc499/magma/checkpoints/MAGMA_410M_clipH_{{NODES}}",
+    save: "/gpfs/alpine/scratch/{{USER}}/csc499/magma/checkpoints/MAGMA_70M_clipH_{{NODES}}",
+    load: "/gpfs/alpine/scratch/{{USER}}/csc499/magma/checkpoints/MAGMA_70M_clipH_{{NODES}}",
 
     eval_every: 2500,
-    wandb_project: "MAGMA_410M_clipH",
-    name: "MAGMA_410M_clipH"
+    eval_steps: 100,
+    wandb_project: "MAGMA_70M_clipH",
+    name: "MAGMA_70M_clipH"
 }

@@ -282,7 +282,7 @@ def get_wds_dataset(args, preprocess_img, preprocess_text, is_train, epoch=0, fl
         dataset,
         batch_size=None,
         shuffle=False,
-        num_workers=args.workers,
+        num_workers=max(1, args.workers),
         persistent_workers=True,
     )
 
