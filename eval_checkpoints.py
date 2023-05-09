@@ -64,24 +64,55 @@ if __name__ == "__main__":
 
     user = "alexisroger"
     experiment = "MAGMA_19M_clipH_5"
-   
+
     losses = open('/gpfs/alpine/scratch/alexisroger/csc499/losses.txt', 'a')
 
     path = Path(f"/gpfs/alpine/csc499/proj-shared/magma/checkpoints/{user}/{experiment}")
     #for checkpoint in path.iterdir():
     for checkpoint in [
-            "/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/original_MAGMA.pt",
+            #"/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/original_MAGMA.pt",
             #"/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step5000.pt",
             #"/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step15000.pt",
             #"/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step20000.pt",
             #"/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step25000.pt",
             #"/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step12500.pt",
             #"/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step10000.pt",
-            "/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step7500.pt",
-            "/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step17500.pt",
-            "/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step2500.pt",
-            "/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step22500.pt",
+            #"/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step7500.pt",
+            #"/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step17500.pt",
+            #"/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step2500.pt",
+            #"/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step22500.pt",
             #"/gpfs/alpine/csc499/proj-shared/magma/checkpoints/alexisroger/MAGMA_19M_clipH_5/global_step27500.pt"
+            
+            #"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step10000/mp_rank_00_model_states.pt",
+#"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step12500/mp_rank_00_model_states.pt",
+#"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step15000/mp_rank_00_model_states.pt",
+#"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step17500/mp_rank_00_model_states.pt",
+#"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step20000/mp_rank_00_model_states.pt",
+#"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step22500/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step2500/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step25000/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step27500/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step30000/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step32500/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step35000/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step37500/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step40000/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step42500/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step45000/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step47500/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step5000/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step50000/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step52500/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step55000/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step57500/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step60000/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step62500/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step65000/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step67500/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step70000/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step72500/mp_rank_00_model_states.pt",
+"/gpfs/alpine/scratch/alexisroger/csc499/magma/checkpoints/MAGMA_70M_clipH_9/global_step7500/mp_rank_00_model_states.pt",
+            
             ]:  
 
         checkpoint = Path(checkpoint)
@@ -154,6 +185,6 @@ if __name__ == "__main__":
             #pbar.set_description(
             #    f"evaluating... Step: {global_step} Eval Loss: {eval_loss}"
             #)
-            print(f"{checkpoint.stem}: {eval_loss}")            
-            losses.write(f"{checkpoint.stem}: {eval_loss}\n")
+            print(f"{checkpoint}: {eval_loss}")            
+            losses.write(f"{checkpoint}: {eval_loss}\n")
 

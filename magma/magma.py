@@ -57,7 +57,7 @@ class Magma(nn.Module):
             self.transformer = self.lm.gpt_neox.layers
         else:
             raise NotImplementedError(f"LM `{self.lm_name}` not recognized")
-        self.word_embedding = self.word_embedding.to(device)
+        #self.word_embedding = self.word_embedding.to(device)
 
         # adapter settings
         self.mlp_adapter_added, self.attn_adapter_added = False, False
@@ -302,8 +302,8 @@ class Magma(nn.Module):
             download_checkpoint(checkpoint_url = checkpoint_url, save_as = checkpoint_path)
 
         model = cls(config = config_path, init_weights = False)
-        map_device = "cpu"
-
+        #map_device = "cpu"
+        map_device = device
         sd = torch.load(checkpoint_path, map_location=map_device)
         if "module" in sd.keys():
             sd = sd["module"]

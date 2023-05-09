@@ -8,8 +8,10 @@
 #BSUB -alloc_flags gpudefault
 #BSUB -P CSC499
 
+#source /gpfs/alpine/csc499/scratch/alexisroger/neox_scratch/setup.sh
 source /gpfs/alpine/csc499/proj-shared/env_setup/setup.sh
 
+#source activate /ccs/home/alexisroger/scratch/miniconda3/envs/gpt-neox-alexis
 #source activate /ccs/home/$(whoami)/scratch/miniconda3/envs/magma
 
 #export HF_DATASETS_CACHE=/gpfs/alpine/scratch/$(whoami)/csc499/cache/hugginface
@@ -31,6 +33,8 @@ if [ ! -e configs/summit_clipH_pythia70m_eval_$NNODES.yml ]; then
 	sed -i "s/{{NODES}}/$NNODES/g" configs/summit_clipH_pythia70m_eval_$NNODES.yml
 	sed -i "s/{{USER}}/$(whoami)/g" configs/summit_clipH_pythia70m_eval_$NNODES.yml
 fi
+
+
 
 if [ ${1:-1} = "-l" ]
   then

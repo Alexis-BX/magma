@@ -10,3 +10,5 @@ configs/summit_clipH_pythia*
 
 magma_pythia*_err.*
 magma_pythia*_out.*
+
+!configs/summit_clipH_pythia70m_eval_2.yml

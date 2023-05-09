@@ -44,7 +44,8 @@ def get_gptj(
     if from_pretrained:
         raise NotImplemented("GPTJ pretrained not implemented")
     else:
-        with init_empty_weights(not init_weights):  # no_init_weights():
+        with no_init_weights():
+            #init_empty_weights(not init_weights):  # no_init_weights():
             model = GPTNeoForCausalLM(config=config)
     return model
 
