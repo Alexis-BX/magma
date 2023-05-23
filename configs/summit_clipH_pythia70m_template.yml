@@ -6,7 +6,7 @@
 
     # language model settings
     lm_name: "pythia",
-    lm_path: "EleutherAI/pythia-70m-deduped",
+    lm_path: "/gpfs/alpine/scratch/alexisroger/csc499/cache/transformers/models--EleutherAI--pythia-70m-deduped/snapshots/979bee2f439365e1c09597e0c64969cff98777cd/",
 
     # train settings
     micro_batch_size: 3,

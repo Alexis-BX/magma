@@ -1,19 +1,25 @@
 #!/bin/bash
-#BSUB -nnodes 9
-#BSUB -W 2:00
-#BSUB -q batch
+#BSUB -nnodes 10
+#BSUB -W 24:00
+#BSUB -q killable
 #BSUB -o /ccs/home/alexisroger/scratch/jobs/magma_pythia70m_out.%J
 #BSUB -e /ccs/home/alexisroger/scratch/jobs/magma_pythia70m_err.%J
 #BSUB -J magma_pythia70m
 #BSUB -alloc_flags gpudefault
 #BSUB -P CSC499
-
-source /gpfs/alpine/csc499/proj-shared/env_setup/setup.sh
+#25000
+# source /gpfs/alpine/csc499/proj-shared/env_setup/setup.sh
+source /gpfs/alpine/csc499/scratch/alexisroger/neox/setup.sh
 
 #source activate /ccs/home/$(whoami)/scratch/miniconda3/envs/magma
+source activate /gpfs/alpine/csc499/scratch/alexisroger/neox/miniconda3/envs/magma
 
-#export HF_DATASETS_CACHE=/gpfs/alpine/scratch/$(whoami)/csc499/cache/hugginface
-#export TRANSFORMERS_CACHE=/gpfs/alpine/scratch/$(whoami)/csc499/cache/transformers
+# export HF_DATASETS_CACHE=/gpfs/alpine/scratch/$(whoami)/csc499/cache/hugginface
+export HF_DATASETS_CACHE=/gpfs/alpine/scratch/$(whoami)/csc499/cache/transformers
+export HUGGINGFACE_HUB_CACHE=/gpfs/alpine/scratch/$(whoami)/csc499/cache/transformers
+export HF_HOME=/gpfs/alpine/scratch/$(whoami)/csc499/cache/transformers
+export TRANSFORMERS_CACHE=/gpfs/alpine/scratch/$(whoami)/csc499/cache/transformers
+# export TRANSFORMERS_CACHE=/css/home/$(whoami)/.cache
 
 export TORCH_EXTENSIONS_DIR=/gpfs/alpine/scratch/$(whoami)/csc499/cache/torch_extensions
 

@@ -70,7 +70,7 @@ def clip_encoder(
         raise NotImplementedError(f"Encoder {name} not recognized")
 
     # TODO better internet connection
-    encoder = open_clip.create_model(name, device=device, precision="fp16" if "cuda" in str(device) else "fp32").visual  # , pretrained=pretrained).visual
+    encoder = open_clip.create_model(name, device=device, precision="fp16" if "cuda" in str(device) else "fp32", pretrained=pretrained).visual
 
     if "RN" in name:
         # remove attention pooling

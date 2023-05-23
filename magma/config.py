@@ -75,7 +75,7 @@ class MultimodalConfig:
     tokenizer_name: str = "gpt2"
     lm_name: str = "EleutherAI/gpt-j-6B"
     image_seq_len: int = 2
-    pretrained_img_encoder: bool = False
+    pretrained_img_encoder: bool = True
     seq_len: int = None
 
     # Layer Freezing settings:
