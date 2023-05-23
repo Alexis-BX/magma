@@ -34,14 +34,16 @@ for prompt in prompts:
 
     ## returns a tensor of shape: (1, 149, 4096)
     embeddings = model.preprocess_inputs(inputs)  
-
+    
+    
+    torch.manual_seed(0)
     ## returns a list of length embeddings.shape[0] (batch size)
     res = ""
     while res == "":
         output = model.generate(
             embeddings = embeddings,
             max_steps = 6,
-            temperature = 0.7,
+            temperature = 0.1,
             top_k = 0,
         )
 
